@@ -165,3 +165,46 @@ async function useModal(id) {
     const data = await res.json();
     displayModal(data.data);
 }
+// display model
+async function displayModal(menu) {
+    const modalContainer = document.getElementById("modalContainer");
+    let menuStatus = menu.status === "open" ? "bg-green-500" : "bg-red-500";
+
+    modalContainer.innerHTML = `
+  <div class="space-x-5">
+        <h2 class="my-4 text-4xl font-bold">${menu.title}</h2>
+        <div class="flex space-x-4 my-6 text-[#64748B] text-xl font-medium">
+            <p><span class="px-3 py-1 rounded-2xl text-white ${menuStatus}">${menu.status}</span></p>
+            <h3>Opened by.${menu.author}</h3>
+            <p>22.2.2026</p>
+        </div>
+        <div class="flex my-6 gap-2">
+            <div class="flex items-center px-5 py-2 bg-[#FDE68A] space-x-2 rounded-4xl">
+                <img src="./assets/Vector (2).png" alt="">
+                <p class="text-[#D97706]"> Bug</p>
+            </div>
+            <div class="flex items-center px-5 py-2 bg-[#FECACA] space-x-2 rounded-4xl">
+                <img src="./assets/Vector (2).png" alt="">
+                <p class="text-[#EF4444]">Allow</p>
+            </div>
+        </div>
+        <p class="text-[#64748B] my-4 line-clamp-2 text-xl font-medium">${menu.description}</p>
+        <div class="bg-gray-200 space-y-4  rounded-xl grid grid-cols-2">
+            <div class="space-y-2 p-3">
+                <p class="text-[#64748B] text-xl font-medium">Assignee:</p>
+                <h2 class="text-xl font-semibold">${menu.assignee ? menu.assignee : "No Added"}</h2>
+            </div>
+            <div class="space-y-3 p-3">
+                <p class="text-[#64748B] text-xl font-medium">Priority</p>
+                <p><span class="px-4 py-1 bg-red-500 rounded-2xl">${menu.priority}</span></p>
+            </div>
+
+        </div>
+    </div>
+ 
+
+    `;
+
+    document.getElementById("my_modal_5").showModal();
+}
+issuesFetchData();
