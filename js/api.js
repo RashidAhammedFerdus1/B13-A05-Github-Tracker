@@ -12,13 +12,11 @@ async function issuesFetchData() {
 // display issues
 
 const displayIssues = (issues) => {
-    //   console.log(issues);
     const issuesContainer = document.getElementById("container");
     issuesContainer.innerHTML = "";
     issues.forEach((item) => {
         let statusIcons = "";
         let priorityColor = "";
-        // console.log(item);
 
         const issuesAppended = document.createElement("div");
 
@@ -26,7 +24,6 @@ const displayIssues = (issues) => {
             "bg-white p-5 space-y-4 border-t-gray-500 border-t-5 rounded-xl";
         // for open and closed border
         if (item.status === "open") {
-            //   console.log(item.status);
             issuesAppended.classList.replace(
                 "border-t-gray-500",
                 "border-t-green-500",
@@ -122,7 +119,7 @@ function toggleBtn(id) {
         } else if (id === "close-btn") {
             filteredIssues = issues.filter((issue) => issue.status === "closed");
             displayIssues(filteredIssues);
-            // hiddenLoading();
+            
             document.getElementById("countIssues").innerText = filteredIssues.length;
         } else if (id === "all-btn") {
             displayIssues(issues);
