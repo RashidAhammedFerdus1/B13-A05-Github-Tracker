@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Issues Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- favicon -->
+    <link rel="shortcut icon" href="./assets/github-logo.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: "Geist", sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="flex flex-col md:flex-row justify-between shadow-xl px-[50px] py-5">
+            <div class="flex flex-col md:flex-row items-center space-x-2">
+                <img class="w-10 h-10 " src="./assets/github-logo.png" alt="">
+                <h2 class="font-bold text-3xl">GitHub Issues Tracker</h2>
+            </div>
+            <div class="flex flex-col md:flex-row gap-4">
+                <label class="input">
+                    <svg class="h-[2em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none"
+                            stroke="currentColor">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.3-4.3"></path>
+                        </g>
+                    </svg>
+                    <input id="searchValue" type="search" class="text-xl" required placeholder="Search" />
+                </label>
+                <div>
+                    <button id="search-btn" class="btn btn-primary text-xl"> <i
+                            class="fa-solid fa-plus"></i>Primary</button>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+
+    <main class=" bg-cover bg-base-300 py-12">
+
+        <!-- 3 btn section -->
+        <section>
+            <div class="bg-white flex flex-col md:flex-row gap-5 shadow-xl rounded-sm p-8 w-11/12 mx-auto">
+                <button id="all-btn" onclick="toggleBtn('all-btn')"
+                    class="px-10 py-2 btn btn-primary text-sm">All</button>
+                <button id="open-btn" onclick="toggleBtn('open-btn')" class="px-9 py-2 btn text-sm">Open</button>
+                <button id="close-btn" onclick="toggleBtn('close-btn')" class="px-9 py-2 btn text-sm">Closed</button>
+            </div>
+        </section>
+        <!-- loadingScan -->
+        <div id="loadingScan" class="items-center hidden justify-center h-40">
+            <span class="loading loading-spinner text-primary "></span>
+        </div>
+
+
+        <!-- issues or count section 50++ -->
+        <section>
+            <div
+                class="flex flex-col md:flex-row justify-between items-center bg-white shadow-xl rounded-sm gap-4 mt-10 p-8 w-11/12 mx-auto">
+                <div class="flex space-x-3 items-center">
+                    <img class="w-12 h-12 p-2 bg-gray-200 rounded-full" src="./assets/Aperture.png" alt="">
+                    <div>
+                        <h2 class="font-bold text-3xl"> <span id="countIssues">50</span> Issues</h2>
+                        <p class="text-[#64748B] text-xl">Track and manage your project issues</p>
+                    </div>
+                </div>
+                <!-- open close -->
+                <div class="flex flex-col md:flex-row items-center gap-4 order-1 md:order-2">
+                    <div class="flex items-center gap-1">
+                        <span class="w-4 h-4 rounded-full bg-green-500"></span>
+                        <p class="font-bold text-xl">Open</p>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="w-4 h-4 rounded-full bg-purple-500"></span>
+                        <p class="font-bold text-xl">Closed</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- card section -->
+        <section class="w-11/12 mx-auto bg-base-200 p-8">
+            <div id="container" class=" grid grid-cols-1 md:grid-cols-4 gap-4">
+            </div>
+        </section>
+
+        <!-- modal -->
+        <section>
+            <!-- Open the modal using ID.showModal() method -->
+            <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+                <div class="modal-box">
+                    <div id="modalContainer">
+                        <!-- modal text -->
+                        <div>
+                            <h2>name</h2>
+                            <div>
+                                <p>open</p>
+                                <h3>Ferdus</h3>
+                                <p>09.03.2026</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <div class="flex items-center px-5 py-2 bg-[#FECACA] space-x-2 rounded-4xl">
+                                    <img src="./assets/Vector (2).png" alt="">
+                                    <p class="text-[#EF4444]">Bug</p>
+                                </div>
+                                <div class="flex items-center px-5 py-2 bg-[#FECACA] space-x-2 rounded-4xl">
+                                    <img src="./assets/Vector (2).png" alt="">
+                                    <p class="text-[#EF4444]">Allow</p>
+                                </div>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet.</p>
+                            <div class="bg-gray-500 grid grid-cols-3">
+                                <div>
+                                    <p>Assignee:</p>
+                                    <h2>Ferdus</h2>
+                                </div>
+                                <div>
+                                    <p>Priority</p>
+                                    <p class="px-4 py-2 bg-red-700">high</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-action">
+                        <form method="dialog">
+                            <!-- if there is a button in form, it will close the modal -->
+                            <button class="btn btn-primary">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+        </section>
+    </main>
+
+
+
+
+    <script src="./js/api.js"></script>
+</body>
+
+</html>
